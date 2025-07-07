@@ -10,33 +10,7 @@ import { ChevronLeft, ChevronRight, Save, Send } from 'lucide-react';
 const surveyQuestions = [
   {
     id: 1,
-    question: "Berapa jumlah Pegawai ASN (PNS dan PPPK) di Instansi Bapak/Ibu?",
-  },
-  {
-    id: 2,
-    question: "Jumlah Pegawai ASN yang telah mengikuti Pengembangan Kompetensi terkait",
-    question1: "Literasi Digital *",
-  },
-  {
-    id: 3,
-    question: "Jumlah Pegawai ASN yang telah mengikuti Pengembangan Kompetensi terkait",
-    question1: "Adaptasi dan Inovasi *",
-  },
-  {
-    id: 4,
-    question: "Jumlah Pegawai ASN yang telah mengikuti Pengembangan Kompetensi terkait",
-    question1: "Green Environment (praktik ramah lingkungan)",
-  },
-  {
-    id: 5,
-    question: "Jumlah Pegawai ASN yang telah mengikuti Pengembangan Kompetensi terkait",
-    question1: "Layanan Unggul (Prima)",
-  },
-  {
-    id: 6,
-    question: "Jumlah Pegawai ASN yang telah mengikuti Pengembangan Kompetensi terkait",
-    question1: "Anti Korupsi",
-    
+    question: "Tambahkan Tautan Dokumen Kebijakan ASN Corpu Instansi Anda",
   },
 ];
 
@@ -87,10 +61,10 @@ export default function InputSurveyPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-xl font-bold text-gray-900 mb-4">
-              Survey Maturitas Corpu Instansi
+              Survey Maturitas ASN Corpu Instansi
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Identifikasi Pemenuhan Kompetensi Generik Nasional
+              Identifikasi Knowledge Management terkait Kompetensi Generik Nasional
             </p>
           </div>
 
@@ -142,22 +116,22 @@ export default function InputSurveyPage() {
           <Card className="mb-8 shadow-lg border-0">
             <CardHeader className="bg-gradient-to-r p-5 from-blue-600 to-blue-700 text-white rounded-t-lg">
               <CardTitle className="text-xl">
-                {currentQ.question} <b>{currentQ.question1}</b>
+                {currentQ.question}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-8">
-              <div className="space-y-4">
+                <div className="space-y-4">
                 <label className="flex flex-col gap-2 p-4 rounded-lg transition-all">
-                  <input
+                    <input
                     type="text"
                     name={`question-${currentQ.id}`}
                     value={answers[currentQ.id] || ''}
+                    placeholder="Masukkan tautan/link dokumen kebijakan ASN Corpu Instansi Anda"
                     onChange={(e) => handleAnswerChange(currentQ.id, e.target.value)}
-                    placeholder="Tulis jawaban Anda di sini"
                     className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                    />
                 </label>
-              </div>
+                </div>
             </CardContent>
           </Card>
 
