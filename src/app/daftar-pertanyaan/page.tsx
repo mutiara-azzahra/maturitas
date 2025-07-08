@@ -59,12 +59,25 @@ export default function DaftarPertanyaanPage() {
         </aside>
         {/* Main Content */}
         <section className="flex-1 flex flex-col items-left justify-start p-8">
-          <h1
-            className="text-2xl font-bold mb-6"
-            style={{ color: "var(--corpu-primary)" }}
-          >
-            Master Data Pertanyaan
-          </h1>
+          <div className="flex items-center justify-between mb-6 gap-4">
+            <h1
+              className="text-2xl font-bold"
+              style={{ color: "var(--corpu-primary)" }}
+            >
+              Master Data Pertanyaan
+            </h1>
+            <Button
+              variant="outline"
+              size="lg"
+              className="bg-green-500 border-green-500 text-white hover:bg-green-500 hover:border-green-600 focus:ring-2 focus:ring-green-200"
+              type="button"
+              onClick={() => alert("Tambah data")}
+              aria-label="Tambah"
+            >
+              <Plus />
+              <b>Tambah Data</b>
+            </Button>
+          </div>
           <div className="w-full max-w-full bg-white rounded-xl shadow p-6">
             <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
               <thead>
