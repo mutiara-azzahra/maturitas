@@ -98,13 +98,26 @@ export default function UbahPertanyaan() {
                   ))}
                 </div>
               </div>
-              {/* Tombol Simpan */}
               <div className="flex justify-end gap-2 mt-4">
-                <Button type="submit" variant="default">
-                  Simpan
-                </Button>
-                <Button type="button" variant="secondary">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-red-500 text-red-600 hover:bg-red-50 hover:border-red-600 focus:ring-2 focus:ring-red-200"
+                  type="button"
+                  onClick={() => alert("Hapus data")}
+                  aria-label="Hapus"
+                >
                   Batal
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-green-500 text-green-600 hover:bg-green-50 hover:border-green-600 focus:ring-2 focus:ring-green-200"
+                  type="submit"
+                  onClick={() => alert("Hapus data")}
+                  aria-label="Hapus"
+                >
+                  Simpan
                 </Button>
               </div>
             </form>
