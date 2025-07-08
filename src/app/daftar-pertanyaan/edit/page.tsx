@@ -1,15 +1,15 @@
-"use client"
+"use client";
 import React from "react";
-import Navbar from '@/src/components/sections/Navbar';
-import Footer from '@/src/components/sections/Footer';
-import { Button } from '@/src/components/ui/button';
-import { Plus, Pencil, Delete } from 'lucide-react';
+import Navbar from "@/src/components/sections/Navbar";
+import Footer from "@/src/components/sections/Footer";
+import { Button } from "@/src/components/ui/button";
+import { Plus, Pencil, Delete } from "lucide-react";
 
 const sidebarMenu = [
-  { label: 'Daftar Pertanyaan', href: '/daftar-pertanyaan' },
-  { label: 'Input Survey', href: '/input-survey' },
-  { label: 'Profile', href: '/profile' },
-  { label: 'Hasil', href: '/results' },
+  { label: "Daftar Pertanyaan", href: "/daftar-pertanyaan" },
+  { label: "Input Survey", href: "/input-survey" },
+  { label: "Profile", href: "/profile" },
+  { label: "Hasil", href: "/results" },
 ];
 
 export default function UbahPertanyaan() {
@@ -33,11 +33,13 @@ export default function UbahPertanyaan() {
         </aside>
         {/* Main Content */}
         <section className="flex-1 flex flex-col items-left justify-start p-8">
-          <h1 className="text-2xl font-bold mb-6" style={{ color: 'var(--corpu-primary)' }}>
-            Master Data Pertanyaan
+          <h1
+            className="text-2xl font-bold mb-6"
+            style={{ color: "var(--corpu-primary)" }}
+          >
+            Edit Data Pertanyaan
           </h1>
-          <div className="w-full max-w-full bg-white rounded-xl shadow p-6">
-          </div>
+          <div className="w-full max-w-full bg-white rounded-xl shadow p-6"></div>
         </section>
       </main>
     </div>
