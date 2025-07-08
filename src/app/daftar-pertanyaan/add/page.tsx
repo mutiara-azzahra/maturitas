@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Navbar from "@/src/components/sections/Navbar";
-import Footer from "@/src/components/sections/Footer";
 import { Button } from "@/src/components/ui/button";
+import { Toaster } from "@/src/components/ui/sonner";
 import { Plus, Pencil, Delete } from "lucide-react";
 
 const sidebarMenu = [
@@ -108,6 +108,7 @@ export default function UbahPertanyaan() {
                   aria-label="Hapus"
                 >
                   Batal
+                  <Toaster />
                 </Button>
                 <Button
                   variant="outline"
