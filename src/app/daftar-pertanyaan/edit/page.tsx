@@ -39,7 +39,76 @@ export default function UbahPertanyaan() {
           >
             Edit Data Pertanyaan
           </h1>
-          <div className="w-full max-w-full bg-white rounded-xl shadow p-6"></div>
+          <div className="w-full max-w-xl bg-white rounded-xl shadow p-6">
+            <form className="flex flex-col gap-6">
+              {/* Input Pertanyaan */}
+              <div>
+                <label className="block text-sm font-medium font-bold mb-3">
+                  <b>Pertanyaan</b>
+                </label>
+                <input
+                  type="text"
+                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                  placeholder="Masukkan pertanyaan disini"
+                  defaultValue="Bagaimana tingkat pemahaman pegawai terhadap visi dan misi organisasi?"
+                />
+              </div>
+              {/* Pilihan Jenis Pertanyaan */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  <b>Jenis Pertanyaan</b>
+                </label>
+                <div className="flex gap-2">
+                  <Button type="button" variant="default">
+                    Pilihan Ganda
+                  </Button>
+                  <Button type="button" variant="outline">
+                    Isian
+                  </Button>
+                </div>
+              </div>
+              {/* Input Jawaban Pilihan Ganda */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Jawaban Pilihan Ganda
+                </label>
+                <div className="flex flex-col gap-2">
+                  {["A", "B", "C", "D", "E"].map((opt, idx) => (
+                    <div key={opt} className="flex items-center gap-2">
+                      <span className="w-6 text-center font-bold">{opt}.</span>
+                      <input
+                        type="text"
+                        className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                        placeholder={`Jawaban ${opt}`}
+                        defaultValue={
+                          idx === 0
+                            ? "Sangat Paham"
+                            : idx === 1
+                            ? "Cukup Paham"
+                            : idx === 2
+                            ? "Kurang Paham"
+                            : idx === 3
+                            ? "Tidak Paham"
+                            : idx === 4
+                            ? "Tidak Tahu"
+                            : ""
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Tombol Simpan */}
+              <div className="flex justify-end gap-2 mt-4">
+                <Button type="submit" variant="default">
+                  Simpan
+                </Button>
+                <Button type="button" variant="secondary">
+                  Batal
+                </Button>
+              </div>
+            </form>
+          </div>
         </section>
       </main>
     </div>
