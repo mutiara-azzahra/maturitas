@@ -39,7 +39,7 @@ export default function UbahPertanyaan() {
           >
             Edit Data Pertanyaan
           </h1>
-          <div className="w-full max-w-xl bg-white rounded-xl shadow p-6">
+          <div className="max-w-full bg-white rounded-xl shadow p-6">
             <form className="flex flex-col gap-6">
               {/* Input Pertanyaan */}
               <div>
