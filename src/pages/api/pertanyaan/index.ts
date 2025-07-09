@@ -11,9 +11,19 @@ export default async function handler(
     // Get all instrument questions
     try {
       const questions = await prisma.instrument_question.findMany();
-      res.status(200).json(questions);
+      // Convert BigInt to string for JSON serialization
+      const questionsSafe = questions.map((q) => ({
+        ...q,
+        id: q.id?.toString(),
+        dimension_id: q.dimension_id?.toString(),
+        indicator_id: q.indicator_id?.toString(),
+      }));
+      res.status(200).json(questionsSafe);
     } catch (error) {
-      res.status(500).json({ error: "Failed to fetch questions" });
+      console.error("GET instrument_question error:", error);
+      res
+        .status(500)
+        .json({ error: "Failed to fetch questions", detail: error });
     }
   } else if (req.method === "POST") {
     // Create a new instrument question
@@ -34,7 +44,10 @@ export default async function handler(
       });
       res.status(201).json(question);
     } catch (error) {
-      res.status(500).json({ error: "Failed to create question" });
+      console.error("POST instrument_question error:", error);
+      res
+        .status(500)
+        .json({ error: "Failed to create question", detail: error });
     }
   } else {
     res.setHeader("Allow", ["GET", "POST"]);
