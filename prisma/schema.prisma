@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -12,4 +6,106 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model corpu_profiling {
+  id                   BigInt                @id(map: "corpu_profiling_pk")
+  agency_id            BigInt?
+  year                 BigInt?
+  created_by           BigInt?
+  profiling_id         BigInt?
+  profiling_answer     String?               @db.VarChar
+  created_at           DateTime?             @db.Timestamp(6)
+  instansi             instansi?             @relation(fields: [agency_id], references: [agency_id], onDelete: NoAction, onUpdate: NoAction, map: "corpu_profiling_instansi_fk")
+  instrument_profiling instrument_profiling? @relation(fields: [profiling_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "corpu_profiling_instrument_profiling_fk")
+  user                 user?                 @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "corpu_profiling_user_fk")
+}
+
+model corpu_score {
+  id                  BigInt               @id(map: "corpu_score_pk")
+  agency_id           BigInt?
+  year                BigInt?
+  created_by          BigInt?
+  question_id         BigInt?
+  answer_id           BigInt?
+  level_id            BigInt?
+  indicator_score     BigInt?
+  created_at          DateTime?            @db.Timestamp(6)
+  instansi            instansi?            @relation(fields: [agency_id], references: [agency_id], onDelete: NoAction, onUpdate: NoAction, map: "corpu_score_instansi_fk")
+  instrument_answer   instrument_answer?   @relation(fields: [answer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "corpu_score_instrument_answer_fk")
+  instrument_question instrument_question? @relation(fields: [question_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "corpu_score_instrument_question_fk")
+  user                user?                @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "corpu_score_user_fk")
+}
+
+model instansi {
+  id                 BigInt             @id(map: "instansi_pk")
+  agency_id          BigInt?            @unique(map: "instansi_unique")
+  agency_name        String?            @db.VarChar(226)
+  agency_category_id Int?
+  corpu_profiling    corpu_profiling[]
+  corpu_score        corpu_score[]
+  instansi_kategori  instansi_kategori? @relation(fields: [agency_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "instansi_instansi_kategori_fk")
+  user               user[]
+}
+
+model instansi_kategori {
+  id           Int        @id(map: "instansi_kategori_pk")
+  kat_instansi String?    @db.VarChar
+  instansi     instansi[]
+}
+
+model instrument_answer {
+  id                  BigInt               @id(map: "instrument_answer_pk")
+  question_id         BigInt?
+  level_id            BigInt?
+  level_description   String?              @db.VarChar
+  level_score         BigInt?
+  corpu_score         corpu_score[]
+  instrument_question instrument_question? @relation(fields: [question_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "instrument_answer_instrument_question_fk")
+}
+
+model instrument_profiling {
+  id                    BigInt            @id(map: "instrument_profiling_pk")
+  profiling_question    String?           @db.VarChar
+  profiling_description String?           @db.VarChar
+  type                  String?           @db.VarChar
+  corpu_profiling       corpu_profiling[]
+}
+
+model instrument_question {
+  id                    BigInt              @id(map: "instrument_question_pk")
+  dimension_id          BigInt?
+  dimension_name        String?             @db.VarChar
+  indicator_id          BigInt?
+  indicator_question    String?             @db.VarChar
+  indicator_weight      Float?              @db.Real
+  dimension_weight      Float?              @db.Real
+  final_weight          Float?              @db.Real
+  indicator_description String?             @db.VarChar
+  corpu_score           corpu_score[]
+  instrument_answer     instrument_answer[]
+}
+
+model role {
+  id        BigInt  @id(map: "role_pk")
+  role_name String? @db.VarChar
+  user      user[]
+}
+
+model user {
+  id              BigInt            @id(map: "user_pk")
+  role_id         BigInt?
+  username        String?           @unique(map: "user_unique") @db.VarChar
+  password        String?           @db.VarChar
+  nip             String?           @unique(map: "user_unique_1") @db.VarChar
+  nama            String?           @db.VarChar
+  jabatan         String?           @db.VarChar
+  unit_kerja      String?           @db.VarChar
+  phone           String?           @db.VarChar
+  email           String?           @db.VarChar
+  agency_id       BigInt?
+  corpu_profiling corpu_profiling[]
+  corpu_score     corpu_score[]
+  instansi        instansi?         @relation(fields: [agency_id], references: [agency_id], onDelete: NoAction, onUpdate: NoAction, map: "user_instansi_fk")
+  role            role?             @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_role_fk")
 }

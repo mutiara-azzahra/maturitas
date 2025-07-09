@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
 import {
   NavigationMenu,
@@ -20,7 +21,14 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex items-center gap-1">
-            <img src="/logo-lan.png" alt="Logo LAN" className="h-10 w-auto" />
+            <Image
+              src="/logo-lan.png"
+              alt="Logo LAN"
+              className="h-10 w-auto"
+              width={40}
+              height={40}
+              priority
+            />
           </div>
           <span className="text-l text-gray-900">Survei Maturitas</span>
         </Link>
@@ -172,7 +180,14 @@ export function NavbarSuccessLogin() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="flex items-center gap-1">
-            <img src="/logo-lan.png" alt="Logo LAN" className="h-10 w-auto" />
+            <Image
+              src="/logo-lan.png"
+              alt="Logo LAN"
+              className="h-10 w-auto"
+              width={40}
+              height={40}
+              priority
+            />
           </div>
           <span className="text-l text-gray-900">Survei Maturitas</span>
         </Link>

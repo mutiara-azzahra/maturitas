@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
 import Navbar from "@/src/components/sections/Navbar";
-import Footer from "@/src/components/sections/Footer";
 import { Button } from "@/src/components/ui/button";
-import { Plus, Pencil, Delete } from "lucide-react";
 
 const sidebarMenu = [
   { label: "Daftar Pertanyaan", href: "/daftar-pertanyaan" },

@@ -2,7 +2,6 @@
 import React from "react";
 import Link from "next/link";
 import Navbar from "@/src/components/sections/Navbar";
-import Footer from "@/src/components/sections/Footer";
 import { Button } from "@/src/components/ui/button";
 import { Plus, Pencil, Delete } from "lucide-react";
 import { routes } from "@/src/app/routes";

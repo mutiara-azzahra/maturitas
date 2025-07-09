@@ -3,7 +3,6 @@ import React from "react";
 import Navbar from "@/src/components/sections/Navbar";
 import { Button } from "@/src/components/ui/button";
 import { Toaster } from "@/src/components/ui/sonner";
-import { Plus, Pencil, Delete } from "lucide-react";
 
 const sidebarMenu = [
   { label: "Daftar Pertanyaan", href: "/daftar-pertanyaan" },

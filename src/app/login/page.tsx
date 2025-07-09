@@ -10,6 +10,7 @@ import {
   KeyRound,
 } from "lucide-react";
 import Navbar from "@/src/components/sections/Navbar";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -34,10 +35,13 @@ export default function LoginPage() {
         <div className="flex bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-3xl h-[80vh]">
           {/* Left: Picture */}
           <div className="hidden md:flex items-center justify-center bg-white w-1/2 p-0">
-            <img
+            <Image
               src="/login.jpg"
               alt="Login Illustration"
               className="h-full w-full object-cover"
+              width={400}
+              height={400}
+              priority
             />
           </div>
           {/* Right: Login Form */}
