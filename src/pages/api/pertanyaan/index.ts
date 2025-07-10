@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -8,49 +8,88 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    // Get all instrument questions
     try {
       const questions = await prisma.instrument_question.findMany();
-      // Convert BigInt to string for JSON serialization
+      // Pastikan BigInt diubah ke string agar tidak error saat JSON.stringify
       const questionsSafe = questions.map((q: any) => ({
         ...q,
         id: q.id?.toString(),
         dimension_id: q.dimension_id?.toString(),
         indicator_id: q.indicator_id?.toString(),
       }));
-      res.status(200).json(questionsSafe);
-    } catch (error) {
-      console.error("GET instrument_question error:", error);
-      res
-        .status(500)
-        .json({ error: "Failed to fetch questions", detail: error });
+      return res.status(200).json(questionsSafe);
+    } catch (error: any) {
+      console.error("GET instrument_question error:", error?.message, error);
+      return res.status(500).json({
+        error: "Failed to fetch questions",
+        detail: error?.message || error,
+      });
     }
-  } else if (req.method === "POST") {
-    // Create a new instrument question
+  }
+
+  if (req.method === "POST") {
     try {
-      const data = req.body;
+      // Log body untuk debug
+      console.log("POST body:", req.body);
+      const {
+        id,
+        dimension_id,
+        dimension_name,
+        indicator_id,
+        indicator_question,
+        indicator_weight,
+        dimension_weight,
+        final_weight,
+        indicator_description,
+      } = req.body;
+
+      // Validasi field wajib
+      if (!id || !dimension_id || !indicator_id) {
+        return res.status(400).json({
+          error: "Missing required fields: id, dimension_id, indicator_id",
+        });
+      }
+
+      // Pastikan id bertipe string/number sesuai schema
+      // Jika id auto increment di Prisma, jangan kirim id dari client
+
       const question = await prisma.instrument_question.create({
         data: {
-          id: data.id, // Make sure to provide a unique id value here
-          dimension_id: data.dimension_id,
-          dimension_name: data.dimension_name,
-          indicator_id: data.indicator_id,
-          indicator_question: data.indicator_question,
-          indicator_weight: data.indicator_weight,
-          dimension_weight: data.dimension_weight,
-          final_weight: data.final_weight,
-          indicator_description: data.indicator_description,
+          id,
+          dimension_id,
+          dimension_name,
+          indicator_id,
+          indicator_question,
+          indicator_weight,
+          dimension_weight,
+          final_weight,
+          indicator_description,
         },
       });
-      res.status(201).json(question);
-    } catch (error) {
-      console.error("POST instrument_question error:", error);
-      res
-        .status(500)
-        .json({ error: "Failed to create question", detail: error });
+
+      // Pastikan BigInt diubah ke string jika perlu
+      const questionSafe = {
+        ...question,
+        id: question.id?.toString(),
+        dimension_id: question.dimension_id?.toString(),
+        indicator_id: question.indicator_id?.toString(),
+      };
+
+      return res.status(201).json(questionSafe);
+    } catch (error: any) {
+      // Log error Prisma detail
+      if (error.code && error.meta) {
+        console.error("Prisma error:", error.code, error.meta);
+      }
+      console.error("POST instrument_question error:", error?.message, error);
+      return res.status(500).json({
+        error: "Failed to create question",
+        detail: error?.message || error,
+      });
     }
-  } else {
-    res.setHeader("Allow", ["GET", "POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
+
+  // Method not allowed
+  res.setHeader("Allow", ["GET", "POST"]);
+  return res.status(405).end(`Method ${req.method} Not Allowed`);
 }

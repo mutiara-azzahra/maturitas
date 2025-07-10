@@ -4,7 +4,6 @@ import Link from "next/link";
 import Navbar from "@/src/components/sections/Navbar";
 import { Button } from "@/src/components/ui/button";
 import { Plus, Pencil, Delete } from "lucide-react";
-import { routes } from "@/src/app/routes";
 
 const sidebarMenu = [
   { label: "Daftar Pertanyaan", href: "/daftar-pertanyaan" },
@@ -117,9 +116,9 @@ export default function DaftarPertanyaanPage() {
                         className="mr-1 border-amber-500 text-amber-600 hover:bg-amber-50 hover:border-amber-600 focus:ring-2 focus:ring-amber-200"
                         aria-label="Edit"
                       >
-                        <Link href={routes.editPertanyaan}>
+                        {/* <Link href={routes.editPertanyaan}>
                           <Pencil />
-                        </Link>
+                        </Link> */}
                       </Button>
                       <Button
                         variant="outline"
