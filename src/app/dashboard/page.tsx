@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import Navbar from "@/src/components/sections/Navbar";
-import { Button } from "@/src/components/ui/button";
-import { Toaster } from "@/src/components/ui/sonner";
 import {
   Card,
   CardContent,
@@ -86,7 +84,7 @@ export default function UbahPertanyaan() {
                             "#fbbf24",
                             "#f87171",
                             "#a3e635",
-                          ].map((color, idx) => (
+                          ].map((color, _idx) => (
                             <Cell key={color} fill={color} />
                           ))}
                         </Pie>
@@ -127,7 +125,7 @@ export default function UbahPertanyaan() {
                             "#f43f5e",
                             "#10b981",
                             "#fbbf24",
-                          ].map((color, idx) => (
+                          ].map((color, _idx) => (
                             <Cell key={color} fill={color} />
                           ))}
                         </Pie>
