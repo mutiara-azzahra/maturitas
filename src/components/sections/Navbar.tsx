@@ -17,7 +17,6 @@ import { Menu, X } from "lucide-react";
 //Default Navbar
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
 
   return (
     <nav className="w-full bg-white shadow-sm px-6 py-3 sticky top-0 z-50 border-b border-gray-100">
@@ -114,7 +113,7 @@ export default function Navbar() {
         <div className="lg:hidden border-t border-gray-100 mt-3 pt-3">
           <div className="flex flex-col space-y-2">
             <Link
-              href="/"
+              href="/dashboard"
               className="px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
               onClick={() => setIsOpen(false)}
             >
