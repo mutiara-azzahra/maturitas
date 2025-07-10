@@ -1,4 +1,3 @@
-// corpu_score;
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
@@ -11,7 +10,6 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       const questions = await prisma.corpu_score.findMany();
-      // Pastikan BigInt diubah ke string agar tidak error saat JSON.stringify
       const questionsSafe = questions.map((q: any) => ({
         ...q,
         id: q.id?.toString(),
@@ -43,15 +41,11 @@ export default async function handler(
         indicator_score,
       } = req.body;
 
-      // Validasi field wajib
       if (!id || !agency_id) {
         return res.status(400).json({
           error: "Missing required fields: id, dimension_id, indicator_id",
         });
       }
-
-      // Pastikan id bertipe string/number sesuai schema
-      // Jika id auto increment di Prisma, jangan kirim id dari client
 
       const question = await prisma.corpu_score.create({
         data: {
@@ -66,7 +60,6 @@ export default async function handler(
         },
       });
 
-      // Pastikan BigInt diubah ke string jika perlu
       const questionSafe = {
         ...question,
         id: question.id?.toString(),
@@ -75,7 +68,6 @@ export default async function handler(
 
       return res.status(201).json(questionSafe);
     } catch (error: any) {
-      // Log error Prisma detail
       if (error.code && error.meta) {
         console.error("Prisma error:", error.code, error.meta);
       }
@@ -87,7 +79,6 @@ export default async function handler(
     }
   }
 
-  // Method not allowed
   res.setHeader("Allow", ["GET", "POST"]);
   return res.status(405).end(`Method ${req.method} Not Allowed`);
 }
