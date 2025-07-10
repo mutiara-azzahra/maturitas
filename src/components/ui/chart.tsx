@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
@@ -118,14 +119,21 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<"div"> & {
-    hideLabel?: boolean;
-    hideIndicator?: boolean;
-    indicator?: "line" | "dot" | "dashed";
-    nameKey?: string;
-    labelKey?: string;
-  }) {
+}: {
+  active?: boolean;
+  payload?: any[];
+  className?: string;
+  indicator?: "line" | "dot" | "dashed";
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  label?: React.ReactNode;
+  labelFormatter?: (...args: any[]) => React.ReactNode;
+  labelClassName?: string;
+  formatter?: (...args: any[]) => React.ReactNode;
+  color?: string;
+  nameKey?: string;
+  labelKey?: string;
+} & React.ComponentProps<"div">) {
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
@@ -256,11 +264,13 @@ function ChartLegendContent({
   payload,
   verticalAlign = "bottom",
   nameKey,
-}: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-    hideIcon?: boolean;
-    nameKey?: string;
-  }) {
+}: {
+  className?: string;
+  hideIcon?: boolean;
+  payload?: any[];
+  verticalAlign?: "top" | "bottom" | "middle";
+  nameKey?: string;
+} & React.ComponentProps<"div">) {
   const { config } = useChart();
 
   if (!payload?.length) {

@@ -84,7 +84,7 @@ export default function UbahPertanyaan() {
                             "#fbbf24",
                             "#f87171",
                             "#a3e635",
-                          ].map((color, _idx) => (
+                          ].map((color) => (
                             <Cell key={color} fill={color} />
                           ))}
                         </Pie>
@@ -125,7 +125,7 @@ export default function UbahPertanyaan() {
                             "#f43f5e",
                             "#10b981",
                             "#fbbf24",
-                          ].map((color, _idx) => (
+                          ].map((color) => (
                             <Cell key={color} fill={color} />
                           ))}
                         </Pie>
