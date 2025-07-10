@@ -12,7 +12,7 @@ export default async function handler(
     try {
       const questions = await prisma.instrument_question.findMany();
       // Convert BigInt to string for JSON serialization
-      const questionsSafe = questions.map((q) => ({
+      const questionsSafe = questions.map((q: any) => ({
         ...q,
         id: q.id?.toString(),
         dimension_id: q.dimension_id?.toString(),
