@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
@@ -15,6 +17,7 @@ import { Menu, X } from "lucide-react";
 //Default Navbar
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <nav className="w-full bg-white shadow-sm px-6 py-3 sticky top-0 z-50 border-b border-gray-100">
@@ -40,7 +43,7 @@ export default function Navbar() {
                   asChild
                   className={navigationMenuTriggerStyle()}
                 >
-                  <Link href="/">Beranda</Link>
+                  <Link href="/dashboard">Beranda</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
