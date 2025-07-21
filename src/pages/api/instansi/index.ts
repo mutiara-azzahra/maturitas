@@ -9,8 +9,8 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      const questions = await prisma.instrument_question.findMany();
-      const questionsSafe = questions.map((q: any) => ({
+      const instansi = await prisma.instansi.findMany();
+      const questionsSafe = instansi.map((q: any) => ({
         ...q,
         id: q.id?.toString(),
         dimension_id: q.dimension_id?.toString(),
@@ -18,9 +18,9 @@ export default async function handler(
       }));
       return res.status(200).json(questionsSafe);
     } catch (error: any) {
-      console.error("GET instrument_question error:", error?.message, error);
+      console.error("GET instansi error:", error?.message, error);
       return res.status(500).json({
-        error: "Failed to fetch questions",
+        error: "Failed to fetch instansi",
         detail: error?.message || error,
       });
     }
@@ -30,57 +30,35 @@ export default async function handler(
     try {
       // Log body untuk debug
       console.log("POST body:", req.body);
-      const {
-        id,
-        dimension_id,
-        dimension_name,
-        indicator_id,
-        indicator_question,
-        indicator_weight,
-        dimension_weight,
-        final_weight,
-        indicator_description,
-      } = req.body;
+      const { id, agency_id, agency_name, agency_category_id } = req.body;
 
-      // Validasi field wajib
-      if (!id || !dimension_id || !indicator_id) {
+      if (!id || !agency_id) {
         return res.status(400).json({
           error: "Missing required fields: id, dimension_id, indicator_id",
         });
       }
 
-      // Pastikan id bertipe string/number sesuai schema
-      // Jika id auto increment di Prisma, jangan kirim id dari client
-
-      const question = await prisma.instrument_question.create({
+      const question = await prisma.instansi.create({
         data: {
           id,
-          dimension_id,
-          dimension_name,
-          indicator_id,
-          indicator_question,
-          indicator_weight,
-          dimension_weight,
-          final_weight,
-          indicator_description,
+          agency_id,
+          agency_name,
+          agency_category_id,
         },
       });
 
-      // Pastikan BigInt diubah ke string jika perlu
       const questionSafe = {
         ...question,
         id: question.id?.toString(),
-        dimension_id: question.dimension_id?.toString(),
-        indicator_id: question.indicator_id?.toString(),
+        agency_id: question.agency_id?.toString(),
       };
 
       return res.status(201).json(questionSafe);
     } catch (error: any) {
-      // Log error Prisma detail
       if (error.code && error.meta) {
         console.error("Prisma error:", error.code, error.meta);
       }
-      console.error("POST instrument_question error:", error?.message, error);
+      console.error("POST instansi error:", error?.message, error);
       return res.status(500).json({
         error: "Failed to create question",
         detail: error?.message || error,
@@ -88,7 +66,6 @@ export default async function handler(
     }
   }
 
-  // Method not allowed
   res.setHeader("Allow", ["GET", "POST"]);
   return res.status(405).end(`Method ${req.method} Not Allowed`);
 }
