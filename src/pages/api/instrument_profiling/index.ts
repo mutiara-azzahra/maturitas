@@ -56,7 +56,7 @@ export default async function handler(
         id: instrument_profiling.id?.toString(),
         profiling_question: instrument_profiling.profiling_question?.toString(),
         profiling_description:
-          instrument_profiling.profiling_description?.toString(),
+          instrument_profiling.profiling_question?.toString(),
       };
 
       return res.status(201).json(instrumentProfilingSafe);
