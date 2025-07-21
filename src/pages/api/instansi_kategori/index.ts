@@ -7,21 +7,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // GET method to fetch all instansi
+  // GET method to fetch all instansi kategori
   if (req.method === "GET") {
     try {
-      const instansi_kategori = await prisma.instansi.findMany();
+      const instansi_kategori = await prisma.instansi_kategori.findMany();
       const instansiKategoriSafe = instansi_kategori.map((q: any) => ({
         ...q,
         id: q.id?.toString(),
         kat_instansi: q.kat_instansi?.toString(),
-        instansi: q.instansi?.toString(),
       }));
       return res.status(200).json(instansiKategoriSafe);
     } catch (error: any) {
-      console.error("GET instansi error:", error?.message, error);
+      console.error("GET instansi kategori error:", error?.message, error);
       return res.status(500).json({
-        error: "Failed to fetch instansi",
+        error: "Failed to fetch instansi kategori data",
         detail: error?.message || error,
       });
     }
@@ -41,7 +40,7 @@ export default async function handler(
         });
       }
 
-      const instansiKategoriSafe = await prisma.instansi_kategori.create({
+      const instansi_kategori = await prisma.instansi_kategori.create({
         data: {
           id,
           kat_instansi,
@@ -49,14 +48,20 @@ export default async function handler(
         },
       });
 
+      const instansiKategoriSafe = {
+        ...instansi_kategori,
+        id: instansi_kategori.id?.toString(),
+        kat_instansi: instansi_kategori.kat_instansi?.toString(),
+      };
+
       return res.status(201).json(instansiKategoriSafe);
     } catch (error: any) {
       if (error.code && error.meta) {
         console.error("Prisma error:", error.code, error.meta);
       }
-      console.error("POST instansi error:", error?.message, error);
+      console.error("POST instansi kategori error:", error?.message, error);
       return res.status(500).json({
-        error: "Failed to create instansi",
+        error: "Failed to create instansi kategori",
         detail: error?.message || error,
       });
     }
